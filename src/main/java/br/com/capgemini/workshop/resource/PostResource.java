@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.capgemini.workshop.domain.Post;
 import br.com.capgemini.workshop.resource.util.URL;
 import br.com.capgemini.workshop.service.PostService;
+import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping(value="/posts")
@@ -22,6 +23,7 @@ public class PostResource {
 	@Autowired
 	private PostService postService;
 	
+	@ApiOperation(value="Busca um Post pelo Id")
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
 	public ResponseEntity<Post> findById(@PathVariable String id){
 		Post post = postService.findById(id);
@@ -29,6 +31,7 @@ public class PostResource {
 		return ResponseEntity.ok().body(post);
 	}
 	
+	@ApiOperation(value="Busca um Post pelo Title")
 	@RequestMapping(value="/titlesearch", method=RequestMethod.GET)
 	public ResponseEntity<List<Post>> findTitle(@RequestParam(value="text", defaultValue="") String text){
 		text = URL.decodeParam(text);
@@ -37,6 +40,7 @@ public class PostResource {
 		return ResponseEntity.ok().body(list);
 	}
 	
+	@ApiOperation(value="Busca Completa")
 	@RequestMapping(value="/fullsearch", method=RequestMethod.GET)
 	public ResponseEntity<List<Post>> fullSearch(
 			@RequestParam(value="text", defaultValue="") String text,
